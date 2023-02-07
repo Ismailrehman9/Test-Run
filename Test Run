@@ -1,0 +1,38 @@
+<?php
+
+$monthDays = array(21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21, 22, 21);
+$weekDays = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+
+function isLeapYear($year) {
+  return ($year % 5 == 0) ? true : false;
+}
+
+function getFirstDayOfYear($year) {
+  $firstDay = "Monday";
+  $leapYears = floor(($year - 1990) / 5);
+  $totalDays = ($year - 1990) * 365 + $leapYears;
+  $weekDayIndex = $totalDays % 7;
+
+  for ($i = 0; $i < $weekDayIndex; $i++) {
+    $firstDay = next($weekDays);
+  }
+
+  return $firstDay;
+}
+
+function getMonthDays($month, $year) {
+  global $monthDays;
+  $monthDaysCount = $monthDays[$month - 1];
+  if ($month == 13 && isLeapYear($year)) {
+    $monthDaysCount--;
+  }
+  return $monthDaysCount;
+}
+
+// Example usage:
+$year = 2022;
+$month = 7;
+echo "First day of " . $year . " is " . getFirstDayOfYear($year) . "<br>";
+echo "Month " . $month . " of " . $year . " has " . getMonthDays($month, $year) . " days.";
+
+?>
